@@ -99,13 +99,13 @@ git clone https://github.com/google-deepmind/mujoco_menagerie.git
 Then run one of the two scripts, passing your ESP32's port:
 
 ```bash
-python teleop.py --port COM3             #plain teleop, empty scene
-python teleop_sort_task.py --port COM3    #teleop + block sorting
+python teleop.py --port COM3              # plain teleop, empty scene
+python teleop_sort_task.py --port COM3    # teleop + block sorting
 ```
 
 On Linux, the port looks like '/dev/ttyUSB0'.
 
-The script opens the simulated follower arm in its natural rest pose (hardcoded as the reference pose), so when the script starts, hold the leader arm in its reference pose and press ENTER. This makes sure that both the leader and the follower arm starts with the same pose.
+The script opens the simulated follower arm in its natural rest pose (hardcoded as the reference pose), so when the script starts, hold the leader arm in its reference pose and press ENTER. This makes sure that both the leader and the follower arm start with the same pose.
 
 
 ## Acknowledgements
