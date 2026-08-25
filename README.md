@@ -64,7 +64,7 @@ joint 0 → SD0/SC0, ... joint 5 → SD5/SC5
 
 Printed in PLA, 0.2mm layer height and 15% infill.
 
-There are 19 unique parts and a total of 43 parts. All the parts are designed to not need support while printing. All the parts are already oriented for printing; if any part loads at an odd angle, lay its flat face on the bed. 
+There are 19 unique parts and a total of 47 parts. All the parts are designed to not need support while printing. All the parts are already oriented for printing; if any part loads at an odd angle, lay its flat face on the bed. 
 
 
 ## Firmware
