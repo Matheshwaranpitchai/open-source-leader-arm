@@ -1,4 +1,5 @@
-# Open-source, low-cost, 3D printed leader arm for teleoperating an SO-ARM 
+# Open-source Leader Arm
+Open-source, low-cost, 3D-printed leader arm for teleoperating an SO-ARM 
 
 <figure class="video_container">
   <iframe src="docs/leader_arm_demo.mp4" frameborder="0" allowfullscreen="true"> 
