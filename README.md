@@ -1,10 +1,7 @@
 # Open-source Leader Arm
 Open-source, low-cost, 3D-printed leader arm for teleoperating an SO-ARM 
 
-<figure class="video_container">
-  <iframe src="docs/leader_arm_demo.mp4" frameborder="0" allowfullscreen="true"> 
-</iframe>
-</figure>
+https://github.com/user-attachments/assets/977a0b56-c7d2-4a90-b86a-445dd3963871
 
 A leader arm is moved by an operator to teleoperate a follower robot arm. A leader arm's joints are never driven, they simply report their joint angles, which the follower mirrors. So instead of using expensive servos, a cheap magnetic encoder like the AS5600 can be used. It results in an arm which is lighter to move by hand and is much cheaper than the one built with servos. 
 
