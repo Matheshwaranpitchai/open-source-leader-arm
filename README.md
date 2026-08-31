@@ -66,6 +66,7 @@ Printed in PLA, 0.2mm layer height and 15% infill.
 
 There are 19 unique parts and a total of 47 parts. All the parts are designed to not need support while printing. All the parts are already oriented for printing; if any part loads at an odd angle, lay its flat face on the bed. 
 
+The part 'bearing_housing' needs a bearing inserted mid-print. Add a pause at 10mm height (layer 50 at 0.2mm layer height setting). In Bambu studio, right-click the corresponding layer on the vertical slider and choose "Add Pause". When the printer pauses, insert the 608 bearing into the pocket, make sure it is seated flat, and then resume.
 
 ## Firmware
 
