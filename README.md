@@ -14,7 +14,7 @@ Currently, the leader arm is tested against a simulated SO-ARM in MuJoCo with li
 |Component| Quantity | Price|
 |-|-|-|
 |AS5600 encoder + Diametric magnet (5mm dia,2mm thick) | 6 | 6 x 186 INR = 1,116 INR (~11.7 USD)|
-|608 Bearing | 6 | 6 x 30 INR = 180 INR (~1.9 USD)|
+|608 Bearing (8x22x7mm) | 6 | 6 x 30 INR = 180 INR (~1.9 USD)|
 | CJMCU TCA9548A I2C 8 Channel Multiplexer| 1 | 59 INR (~0.6 USD)|
 |ESP32 | 1 | 550 INR (~5.8 USD)|
 |28 AWG Silicon Wires | ~5m per color (4 colors) | 477 INR (~ 5 USD)|
