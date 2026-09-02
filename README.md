@@ -64,9 +64,33 @@ joint 0 → SD0/SC0, ... joint 5 → SD5/SC5
 
 Printed in PLA, 0.2mm layer height and 15% infill.
 
-There are 19 unique parts and a total of 47 parts. All the parts are designed to not need support while printing. All the parts are already oriented for printing; if any part loads at an odd angle, lay its flat face on the bed. 
+There are 19 unique parts and a total of 50 parts. All the parts are designed to not need support while printing. All the parts are already oriented for printing; if any part loads at an odd angle, lay its flat face on the bed. 
 
 The part 'bearing_housing' needs a bearing inserted mid-print. Add a pause at 10mm height (layer 50 at 0.2mm layer height setting). In Bambu studio, right-click the corresponding layer on the vertical slider and choose "Add Pause". When the printer pauses, insert the 608 bearing into the pocket, make sure it is seated flat, and then resume.
+
+### Parts list and count
+
+```
+1 x base
+1 x base_connector
+6 x bearing_housing
+6 x encoder_housing
+6 x encoder_housing_cap
+6 x rotor 
+3 x link_perpendicular_base
+3 x link_perpendicular_body
+1 x link_shoulder_to_elbow
+1 x link_elbow_to_wrist
+1 x link_tooltip 
+3 x washer_perpendicular_link 
+3 x washer_round
+1 x handle_base
+1 x handle_body
+1 x rest_pose_holder_base
+1 x rest_pose_holder_body
+3 x wire_holder
+2 x rubberband_housing
+```
 
 ## Firmware
 
