@@ -153,7 +153,7 @@ This leader arm has six joints, `joint_0` to `joint_5`.
 7. `assembly_step_6 + base` ![step_7](docs/step_7.png)
 8. `assembly_step_7 + rest_pose_holder_base + rest_pose_holder_body` ![step_8](docs/step_8.png)
 9. `assembly_step_8 + bearing_housing` ![step_9](docs/step_9.png)
-10. `assembly_step_9 + rotor + link_shoulder_to_elbow + washer_round` (`joint_1`)
+10. `assembly_step_9 + rotor + link_shoulder_to_elbow + washer_round` (`joint_1`) ![step_10](docs/step_10.png)
 11. `link_shoulder_to_elbow + bearing_housing` (similar to step 9)
 12. `assembly_step_11 + rotor + link_elbow_to_wrist + washer_round` (similar to step 10) (`joint_2`)
 13. `link_elbow_to_wrist + bearing_housing` (similar to step 11)
