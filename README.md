@@ -147,12 +147,12 @@ This leader arm has six joints, `joint_0` to `joint_5`.
 1. Start by wiring all the six encoders as shown in `wiring.png`.
 2. insert the diametric magnet into the circular pocket provided in the `rotor` (for all 6 rotors)
 3. `rotor + bearing_housing + link_perpendicular_base + link_perpendicular_body + washer_perpendicular_link` (`joint_0`)![step_3](docs/step_3.png)
-4. `assembly_step_3 + base_connector`
-5. `assembly_step_4 + encoder_housing + AS5600_encoder`.
+4. `assembly_step_3 + base_connector` ![step_4](docs/step_4.png)
+5. `assembly_step_4 + encoder_housing + AS5600_encoder` ![step_5](docs/step_5.png)
 6. Tie a knot in the wire, then attach the `encoder_housing_cap`, so that a wire pull doesn't act on the encoder. 
-7. `assembly_step_6 + base`
-8. `assembly_step_7 + rest_pose_holder_base + rest_pose_holder_body`
-9. `assembly_step_8 + bearing_housing`
+7. `assembly_step_6 + base` ![step_7](docs/step_7.png)
+8. `assembly_step_7 + rest_pose_holder_base + rest_pose_holder_body` ![step_8](docs/step_8.png)
+9. `assembly_step_8 + bearing_housing` ![step_9](docs/step_9.png)
 10. `assembly_step_9 + rotor + link_shoulder_to_elbow + washer_round` (`joint_1`)
 11. `link_shoulder_to_elbow + bearing_housing` (similar to step 9)
 12. `assembly_step_11 + rotor + link_elbow_to_wrist + washer_round` (similar to step 10) (`joint_2`)
@@ -164,10 +164,10 @@ This leader arm has six joints, `joint_0` to `joint_5`.
 18. `assembly_step_17 + rotor + link_tooltip + washer_round` (`joint_5`)
 19. `assembly_step_18 + encoder_housing + AS5600_encoder`
 20. Tie a knot in the wire as in step 6
-21. `assembly_step_20 + handle_base` (the `handle_base` also acts here as the `encoder_housing_cap`)
-22. `assembly_step_21 + handle_body`
-23. attach the three `wire_holder`s on `link_shoulder_to_elbow` and `link_elbow_to_wrist`.
-24. Route a single rubberband through both `rubberband_housings`, then fix one housing to `link_shoulder_to_elbow` and one to `link_elbow_to_wrist`.
+21. `assembly_step_20 + handle_base` (the `handle_base` also acts here as the `encoder_housing_cap`) ![step_21](docs/step_21.png)
+22. `assembly_step_21 + handle_body` ![step_22](docs/step_22.png)
+23. attach the three `wire_holder`s on `link_shoulder_to_elbow` and `link_elbow_to_wrist`. ![step_23](docs/step_23.png)
+24. Route a single rubberband through both `rubberband_housings`, then fix one housing to `link_shoulder_to_elbow` and one to `link_elbow_to_wrist`. ![step_24](docs/step_24.png)
 25. attach the `encoder_housing + AS5600_encoder`, tie a knot, and attach the `encoder_housing_cap` for the four remaining joints, in the same way as step 5 or step 19. 
 
 ## Acknowledgements
