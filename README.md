@@ -27,6 +27,7 @@ Excluding the price of the 3D printed parts.
 
 For context: the STS3215 servo used in the standard LeRobot leader arm costs around 24 USD each, and the leader arm needs six, roughly 144 USD in servos alone. Our entire component list comes in under 28 USD.
 
+Note: The encoder and diametric magnet almost always come as a combo. Try to buy them together, the diametric magnet on its own can be difficult to source. 
 
 ## How it works?
 ![How it works explainer](docs/how_it_works.png)
@@ -64,7 +65,7 @@ joint 0 → SD0/SC0, ... joint 5 → SD5/SC5
 
 Printed in PLA, 0.2mm layer height and 15% infill.
 
-There are 19 unique parts and a total of 50 parts. All the parts are designed to not need support while printing. All the parts are already oriented for printing; if any part loads at an odd angle, lay its flat face on the bed. 
+There are 19 unique parts and a total of 49 parts. All the parts are designed to not need support while printing. All the parts are already oriented for printing; if any part loads at an odd angle, lay its flat face on the bed. 
 
 The part 'bearing_housing' needs a bearing inserted mid-print. Add a pause at 10mm height (layer 50 at 0.2mm layer height setting). In Bambu studio, right-click the corresponding layer on the vertical slider and choose "Add Pause". When the printer pauses, insert the 608 bearing into the pocket, make sure it is seated flat, and then resume.
 
@@ -75,7 +76,7 @@ The part 'bearing_housing' needs a bearing inserted mid-print. Add a pause at 10
 1 x base_connector
 6 x bearing_housing
 6 x encoder_housing
-6 x encoder_housing_cap
+5 x encoder_housing_cap
 6 x rotor 
 3 x link_perpendicular_base
 3 x link_perpendicular_body
@@ -133,6 +134,41 @@ On Linux, the port looks like '/dev/ttyUSB0'.
 
 The script opens the simulated follower arm in its natural rest pose (hardcoded as the reference pose), so when the script starts, hold the leader arm in its reference pose and press ENTER. This makes sure that both the leader and the follower arm start with the same pose.
 
+## Assembly guide
+
+This leader arm has six joints, `joint_0` to `joint_5`.
+### Before you start : 
+- See the print settings section for the full parts list and count
+- Use the images in the guide for parts orientation and alignment. The assembly files under cad_files are also helpful for this.
+- Notation : A + B means "attach part B to part A or assembly A". assembly_step_N refers to the result of step N. 
+- Only joint_0 and joint_5 get their encoder attached immediately. The remaining four joints get their encoders at the very end, so that there is less wire clutter during the assembly.
+ 
+### Steps : 
+1. Start by wiring all the six encoders as shown in `wiring.png`.
+2. insert the diametric magnet into the circular pocket provided in the `rotor` (for all 6 rotors)
+3. `rotor + bearing_housing + link_perpendicular_base + link_perpendicular_body + washer_perpendicular_link` (`joint_0`)![step_3](docs/step_3.png)
+4. `assembly_step_3 + base_connector`
+5. `assembly_step_4 + encoder_housing + AS5600_encoder`.
+6. Tie a knot in the wire, then attach the `encoder_housing_cap`, so that a wire pull doesn't act on the encoder. 
+7. `assembly_step_6 + base`
+8. `assembly_step_7 + rest_pose_holder_base + rest_pose_holder_body`
+9. `assembly_step_8 + bearing_housing`
+10. `assembly_step_9 + rotor + link_shoulder_to_elbow + washer_round` (`joint_1`)
+11. `link_shoulder_to_elbow + bearing_housing` (similar to step 9)
+12. `assembly_step_11 + rotor + link_elbow_to_wrist + washer_round` (similar to step 10) (`joint_2`)
+13. `link_elbow_to_wrist + bearing_housing` (similar to step 11)
+14. `assembly_step_13 + rotor + link_perpendicular_base + link_perpendicular_body + washer_perpendicular_link` (similar to step 3) (`joint_3`)
+15. `assembly_step_14 + bearing_housing` (similar to step 9)
+16. `assembly_step_15 + rotor + link_perpendicular_base + link_perpendicular_body + washer_perpendicular_link` (similar to step 14) (`joint_4`)
+17. `assembly_step_16 + bearing_housing` (similar to steps 9 and 15)
+18. `assembly_step_17 + rotor + link_tooltip + washer_round` (`joint_5`)
+19. `assembly_step_18 + encoder_housing + AS5600_encoder`
+20. Tie a knot in the wire as in step 6
+21. `assembly_step_20 + handle_base` (the `handle_base` also acts here as the `encoder_housing_cap`)
+22. `assembly_step_21 + handle_body`
+23. attach the three `wire_holder`s on `link_shoulder_to_elbow` and `link_elbow_to_wrist`.
+24. Route a single rubberband through both `rubberband_housings`, then fix one housing to `link_shoulder_to_elbow` and one to `link_elbow_to_wrist`.
+25. attach the `encoder_housing + AS5600_encoder`, tie a knot, and attach the `encoder_housing_cap` for the four remaining joints, in the same way as step 5 or step 19. 
 
 ## Acknowledgements
 
