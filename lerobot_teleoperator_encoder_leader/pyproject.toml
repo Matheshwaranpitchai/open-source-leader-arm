@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lerobot_teleoperator_encoder_leader"
+version = "0.1.0"
+description = "LeRobot Teleoperator plugin for the $28 AS5600 encoder-based SO-ARM leader arm"
+requires-python = ">=3.10"
+dependencies = ["lerobot", "pyserial"]
+
+[tool.setuptools.packages.find]
+include = ["lerobot_teleoperator_encoder_leader*"]
