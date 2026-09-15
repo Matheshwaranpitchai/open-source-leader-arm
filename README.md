@@ -143,8 +143,8 @@ pip install -e lerobot_robot_mujoco_so_arm
 #### Teleoperate the arm
 
 ```bash
-lerobot-teleoperate \
-  --robot.type=so101_follower --robot.port=COM6 --robot.id=my_follower \
+lerobot-teleoperate `
+  --robot.type=so101_follower --robot.port=COM6 --robot.id=my_follower `
   --teleop.type=encoder_leader --teleop.port=COM3 --teleop.id=my_leader
 ```
 
@@ -157,27 +157,27 @@ Swap `--robot.type=mujoco_so_arm --robot.id=sim --robot.scene=mujoco_menagerie/t
 #### Record a dataset with a physical follower
 
 ```bash
-lerobot-record \
-  --robot.type=so101_follower --robot.port=COM6 --robot.id=my_follower \
-  --robot.cameras="{top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}, wrist: {type: opencv, index_or_path: 1, width: 640, height: 480, fps: 30}}" \
-  --teleop.type=encoder_leader --teleop.port=COM3 --teleop.id=my_leader \
-  --dataset.repo_id=<hf_user>/so_arm_sort --dataset.num_episodes=50 \
+lerobot-record `
+  --robot.type=so101_follower --robot.port=COM6 --robot.id=my_follower `
+  --robot.cameras="{top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}, wrist: {type: opencv, index_or_path: 1, width: 640, height: 480, fps: 30}}" `
+  --teleop.type=encoder_leader --teleop.port=COM3 --teleop.id=my_leader `
+  --dataset.repo_id=<hf_user>/so_arm_sort --dataset.num_episodes=50 `
   --dataset.single_task="Put the red block in the left bin"
 ```
-
+Replace `<hf_user>` with your huggingface username.
 For more, see [Record a dataset](https://huggingface.co/docs/lerobot/main/en/lerobot-dataset-v3#record-a-dataset) in the LeRobot docs.
 
 #### Record a dataset in simulation
 
 ```bash
-lerobot-record \
-  --robot.type=mujoco_so_arm --robot.id=sim \
-  --robot.scene=mujoco_menagerie/trs_so_arm100/scene.xml --robot.viewer=false \
-  --teleop.type=encoder_leader --teleop.port=COM3 --teleop.id=my_leader \
-  --dataset.repo_id=<hf_user>/so_arm_sort --dataset.num_episodes=50 \
+lerobot-record `
+  --robot.type=mujoco_so_arm --robot.id=sim `
+  --robot.scene=mujoco_menagerie/trs_so_arm100/scene.xml --robot.viewer=true `
+  --teleop.type=encoder_leader --teleop.port=COM3 --teleop.id=my_leader `
+  --dataset.repo_id=<hf_user>/so_arm_sort --dataset.num_episodes=50 `
   --dataset.single_task="Put the red block in the left bin"
 ```
-
+Replace `<hf_user>` with your huggingface username.
 The scene comes with a block-sorting task: three coloured blocks and three matching bins.
 
 Between episodes the blocks get rearranged into new positions. The plugin watches the same keys `lerobot-record` already uses (Right/Left, or `n`/`r`), so there is nothing extra to press and nothing to do during the reset window.
@@ -185,7 +185,7 @@ Between episodes the blocks get rearranged into new positions. The plugin watche
 If you end episodes by timeout rather than by keypress, match both of `lerobot-record`'s timers or the episode tracking drifts:
 
 ```bash
-  --dataset.episode_time_s=30 --robot.episode_time_s=30 \
+  --dataset.episode_time_s=30 --robot.episode_time_s=30 `
   --dataset.reset_time_s=10  --robot.reset_time_s=10
 ```
 
