@@ -6,7 +6,7 @@ https://github.com/user-attachments/assets/977a0b56-c7d2-4a90-b86a-445dd3963871
 
 A leader arm is moved by an operator to teleoperate a follower robot arm. A leader arm's joints are never driven, they simply report their joint angles, which the follower mirrors. So instead of using expensive servos, a cheap magnetic encoder like the AS5600 can be used. It results in an arm which is lighter to move by hand and is much cheaper than the one built with servos. 
 
-Currently, the leader arm is tested against a simulated SO-ARM in MuJoCo with live physics, so you can pick up and move objects in the scene without a physical follower arm.
+Currently, the leader arm is tested against a simulated SO-ARM in MuJoCo with live physics, so you can pick up and move objects in the scene without a physical follower arm. It also plugs into LeRobot as a teleoperator, so you can record training datasets entirely in simulation.
 
 
 ## Bill of materials
@@ -103,36 +103,116 @@ Flash firmware.ino to the ESP32 using the Arduino IDE:
 
 The firmware uses only the built-in 'Wire' library, so there's nothing else to install.
 
-On boot it prints a channel scan. It prints "-1" if there is an issue with the connection, missing magnet or miswired encoder etc.,
+On boot it prints a channel scan, one line per channel, naming whatever is wrong: "no device at 0x36" for a wiring or power fault, or "magnet too weak / too far", "too strong / too close" or "not detected" for a magnet fault.
 
 If everything works then it prints "magnet ok"
 
 Example : # ch0: AS5600 found, magnet ok, raw 1234
 
-After the scan, it streams the six encoder readings as a comma-separated line, at 100 Hz.
+After the scan, it streams the six encoder readings as a comma-separated line, at 100 Hz. A channel that cannot be read sends "-1" in place of its angle.
 
 
 ## Running the software
 
-The python side reads the encoder stream and drives a simulated SO-ARM in MuJoCo.
+Two ways to drive the follower arm: using LeRobot plugins (recommended), which work with a physical or a simulated follower, or the standalone scripts, which drive the simulated follower only. The follower arm in both methods starts in the SO-ARM rest pose, so hold the leader in its reference pose and press ENTER when prompted. That aligns both arms.
 
-Install the dependencies and clone the robot model (the scripts expect it in the working directory)
+### Simulator setup
+
+Skip this if you are using a physical follower. The simulator needs the SO-ARM model from MuJoCo Menagerie; the full repo is 2.35 GB, so pull only the SO-ARM100 folder (6.5 MB):
+
+```bash
+git clone --depth 1 --filter=blob:none --sparse https://github.com/google-deepmind/mujoco_menagerie.git
+cd mujoco_menagerie
+git sparse-checkout set trs_so_arm100
+cd ..
+```
+### Method 1 - using LeRobot plugins
+
+Two plugins in this repo make the arm work inside [LeRobot](https://github.com/huggingface/lerobot):
+
+- `lerobot_teleoperator_encoder_leader` - registers this leader arm as a LeRobot `Teleoperator`, so it replaces the servo leader in LeRobot's standard commands.
+- `lerobot_robot_mujoco_so_arm` - registers a MuJoCo-simulated SO-ARM100 as a LeRobot `Robot`, so you can run the whole pipeline without a physical follower.
+
+From the repo root (Python 3.10 or newer):
+```bash
+pip install lerobot
+pip install -e lerobot_teleoperator_encoder_leader
+pip install -e lerobot_robot_mujoco_so_arm
+```
+
+#### Teleoperate the arm
+
+```bash
+lerobot-teleoperate \
+  --robot.type=so101_follower --robot.port=COM6 --robot.id=my_follower \
+  --teleop.type=encoder_leader --teleop.port=COM3 --teleop.id=my_leader
+```
+
+Replace `COM3` with your ESP32's port. It's the same one the Arduino IDE showed when you flashed the firmware; on Linux and macOS it looks like `/dev/ttyUSB0`. Replace `COM6` with your follower's port.
+
+When prompted, make sure the follower is in its rest pose, then hold the leader in its reference pose and press ENTER. That zeroes the encoders against the follower's rest pose.
+
+Swap `--robot.type=mujoco_so_arm --robot.id=sim --robot.scene=mujoco_menagerie/trs_so_arm100/scene.xml` and drop `--robot.port` to drive the follower in simulation.
+
+#### Record a dataset with a physical follower
+
+```bash
+lerobot-record \
+  --robot.type=so101_follower --robot.port=COM6 --robot.id=my_follower \
+  --robot.cameras="{top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}, wrist: {type: opencv, index_or_path: 1, width: 640, height: 480, fps: 30}}" \
+  --teleop.type=encoder_leader --teleop.port=COM3 --teleop.id=my_leader \
+  --dataset.repo_id=<hf_user>/so_arm_sort --dataset.num_episodes=50 \
+  --dataset.single_task="Put the red block in the left bin"
+```
+
+For more, see [Record a dataset](https://huggingface.co/docs/lerobot/main/en/lerobot-dataset-v3#record-a-dataset) in the LeRobot docs.
+
+#### Record a dataset in simulation
+
+```bash
+lerobot-record \
+  --robot.type=mujoco_so_arm --robot.id=sim \
+  --robot.scene=mujoco_menagerie/trs_so_arm100/scene.xml --robot.viewer=false \
+  --teleop.type=encoder_leader --teleop.port=COM3 --teleop.id=my_leader \
+  --dataset.repo_id=<hf_user>/so_arm_sort --dataset.num_episodes=50 \
+  --dataset.single_task="Put the red block in the left bin"
+```
+
+The scene comes with a block-sorting task: three coloured blocks and three matching bins.
+
+Between episodes the blocks get rearranged into new positions. The plugin watches the same keys `lerobot-record` already uses (Right/Left, or `n`/`r`), so there is nothing extra to press and nothing to do during the reset window.
+
+If you end episodes by timeout rather than by keypress, match both of `lerobot-record`'s timers or the episode tracking drifts:
+
+```bash
+  --dataset.episode_time_s=30 --robot.episode_time_s=30 \
+  --dataset.reset_time_s=10  --robot.reset_time_s=10
+```
+
+Set the recording rate with `--dataset.fps` (default is 30). On integrated graphics 30 is about the limit; drop to 25 if the loop lags behind it.
+
+Shadows and reflections are left out of the recorded images to keep the render cheap.
+
+### Method 2 - using standalone scripts
+
+No LeRobot needed; the encoder stream drives MuJoCo directly.
 
 ```bash
 pip install "mujoco>=3.2" pyserial
-git clone https://github.com/google-deepmind/mujoco_menagerie.git
 ```
-
-Then run one of the two scripts, passing your ESP32's port:
-
+Run either one.
 ```bash
 python teleop.py --port COM3              # plain teleop, empty scene
 python teleop_sort_task.py --port COM3    # teleop + block sorting
 ```
 
-On Linux, the port looks like '/dev/ttyUSB0'.
+On Linux, the port looks like `/dev/ttyUSB0`.
 
-The script opens the simulated follower arm in its natural rest pose (hardcoded as the reference pose), so when the script starts, hold the leader arm in its reference pose and press ENTER. This makes sure that both the leader and the follower arm start with the same pose.
+In `teleop_sort_task.py`, press `R` in the viewer to reset the blocks.
+
+
+
+
 
 ## Assembly guide
 
@@ -176,4 +256,4 @@ This project builds on the work of several open-source projects:
 
 - [SO-ARM100](https://github.com/TheRobotStudio/SO-ARM100) - the follower arm design this leader is built to teleoperate.
 - [LeRobot](https://github.com/huggingface/lerobot) - the leader/follower teleoperation approach this project is based on.
-- [MuJoCo Menagerie](https://github.com/google-deepmind/mujoco_menagerie) - the SO-ARM simulation model used by the teleop scripts.
+- [MuJoCo Menagerie](https://github.com/google-deepmind/mujoco_menagerie) - the SO-ARM model used by the simulated follower.
