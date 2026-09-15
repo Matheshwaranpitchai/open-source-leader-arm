@@ -8,6 +8,9 @@ A leader arm is moved by an operator to teleoperate a follower robot arm. A lead
 
 Currently, the leader arm is tested against a simulated SO-ARM in MuJoCo with live physics, so you can pick up and move objects in the scene without a physical follower arm. It also plugs into LeRobot as a teleoperator, so you can record training datasets entirely in simulation.
 
+## Featured Build
+
+Oliver Choy independently built the Leader Arm and documented the process, including the ROS 2 implementation. He'll also be showcasing it at ROSCon 2026. [Read about his build →](https://www.linkedin.com/pulse/building-sub-50-3d-printed-robotic-arm-ros-2-little-oliver-choy-22amc/)
 
 ## Bill of materials
 
