@@ -118,8 +118,8 @@ Two ways to drive the follower arm: using LeRobot plugins (recommended), which w
 
 ### Simulator setup
 
-Skip this if you are using a physical follower. The simulator needs the SO-ARM model from MuJoCo Menagerie; the full repo is 2.35 GB, so pull only the SO-ARM100 folder (6.5 MB):
-
+Skip this if you are using a physical follower. The simulator needs the SO-ARM model from MuJoCo Menagerie; the full repo is 2.35 GB, so pull only the SO-ARM100 folder (6.5 MB).
+From the repo root:
 ```bash
 git clone --depth 1 --filter=blob:none --sparse https://github.com/google-deepmind/mujoco_menagerie.git
 cd mujoco_menagerie
