@@ -7,7 +7,7 @@ name = "lerobot_robot_mujoco_so_arm"
 version = "0.1.0"
 description = "LeRobot Robot plugin: SO-ARM100 follower simulated in MuJoCo"
 requires-python = ">=3.10"
-dependencies = ["lerobot", "mujoco", "numpy"]
+dependencies = ["lerobot", "mujoco", "numpy", "pynput"]
 
 [tool.setuptools.packages.find]
 include = ["lerobot_robot_mujoco_so_arm*"]
