@@ -8,7 +8,6 @@ MJ_JOINTS = ["Rotation", "Pitch", "Elbow", "Wrist_Pitch", "Wrist_Roll", "Jaw"]
 
 
 def _default_joint_range() -> dict[int, tuple[float, float]]:
-    """(lo, hi) radians per joint, from the SO-ARM100 MJCF. Fixed by the hardware."""
     return {
         0: (-1.92, 1.92),
         1: (-3.32, 0.174),
@@ -20,7 +19,6 @@ def _default_joint_range() -> dict[int, tuple[float, float]]:
 
 
 def _default_home_angle() -> dict[int, float]:
-    """SO-ARM rest pose in radians, same reference pose the leader is homed on."""
     return {0: -0.4517, 1: -3.32, 2: 3.1078, 3: 1.2338, 4: 0.1391, 5: -0.174}
 
 
@@ -35,5 +33,20 @@ class MujocoSOArmConfig(RobotConfig):
     image_width: int = 224
     image_height: int = 224
 
+    wrist_camera: bool = True
+    wrist_camera_name: str = "wrist"
+    wrist_image_width: int = 128
+    wrist_image_height: int = 128
+
+    fast_render: bool = True
+
     joint_range: dict[int, tuple[float, float]] = field(default_factory=_default_joint_range)
     home_angle: dict[int, float] = field(default_factory=_default_home_angle)
+
+    task: bool = True
+
+    reset_delay_s: float = 1.0
+    episode_time_s: float | None = None
+    reset_time_s: float | None = None
+    randomize: bool = True
+    seed: int = 0
