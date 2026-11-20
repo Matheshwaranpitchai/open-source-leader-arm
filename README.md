@@ -6,7 +6,7 @@ https://github.com/user-attachments/assets/7117b581-dd3b-4814-960d-b31f63a483ec
 
 A leader arm is moved by an operator to teleoperate a follower robot arm. A leader arm's joints are never driven, they simply report their joint angles, which the follower mirrors. So instead of using expensive servos, a cheap magnetic encoder like the AS5600 can be used. It results in an arm which is lighter to move by hand and is much cheaper than the one built with servos. 
 
-Currently, the leader arm is tested against a simulated SO-ARM in MuJoCo with live physics, so you can pick up and move objects in the scene without a physical follower arm. It also plugs into LeRobot as a teleoperator, so you can record training datasets entirely in simulation.
+The leader arm is tested with both a physical SO-ARM101 follower and a simulated SO-ARM100 in MuJoCo with live physics. Without a physical follower, you can still pick up and move objects in the simulated scene. It plugs into LeRobot as a teleoperator, so you can record training datasets on the real robot or entirely in simulation.
 
 ## Featured Build
 
