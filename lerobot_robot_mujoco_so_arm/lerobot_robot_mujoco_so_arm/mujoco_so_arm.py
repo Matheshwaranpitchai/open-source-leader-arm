@@ -1,4 +1,5 @@
 import logging
+import math
 import time
 
 import cv2
@@ -311,17 +312,21 @@ class MujocoSOArm(Robot):
             return {}
         return self._task.success(self.data)
 
+    # Arm joints in degrees from the middle of the joint range (LeRobot's SO follower zero), gripper 0-100.
     def _norm_to_angle(self, idx: int, value: float) -> float:
         lo, hi = self.config.joint_range[idx]
-        unit = value / 100.0 if JOINTS[idx] == "gripper" else (value + 100.0) / 200.0
-        unit = min(max(unit, 0.0), 1.0)
-        return lo + unit * (hi - lo)
+        if JOINTS[idx] == "gripper":
+            angle = lo + value / 100.0 * (hi - lo)
+        else:
+            angle = (lo + hi) / 2 + math.radians(value)
+        return min(max(angle, lo), hi)
 
     def _angle_to_norm(self, idx: int, angle: float) -> float:
         lo, hi = self.config.joint_range[idx]
-        unit = (angle - lo) / max(hi - lo, 1e-9)
-        unit = min(max(unit, 0.0), 1.0)
-        return unit * 100.0 if JOINTS[idx] == "gripper" else unit * 200.0 - 100.0
+        angle = min(max(angle, lo), hi)
+        if JOINTS[idx] == "gripper":
+            return (angle - lo) / max(hi - lo, 1e-9) * 100.0
+        return math.degrees(angle - (lo + hi) / 2)
 
 
     def _ensure_camera(self, spec) -> None:
