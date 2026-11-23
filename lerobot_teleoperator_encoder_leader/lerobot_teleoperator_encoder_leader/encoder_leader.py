@@ -116,14 +116,14 @@ class EncoderLeader(Teleoperator):
             angle = self.config.home_angle[jidx] + delta
 
             lo, hi = self.config.joint_range[jidx]
-            unit = (angle - lo) / max(hi - lo, 1e-9)
-            unit = min(max(unit, 0.0), 1.0)
+            angle = min(max(angle, lo), hi)
 
             name = JOINTS[jidx]
             if name == "gripper":
-                action[f"{name}.pos"] = unit * 100.0
+                action[f"{name}.pos"] = (angle - lo) / max(hi - lo, 1e-9) * 100.0
             else:
-                action[f"{name}.pos"] = unit * 200.0 - 100.0
+                # Degrees from the middle of the joint range, the zero LeRobot's SO followers use.
+                action[f"{name}.pos"] = math.degrees(angle - (lo + hi) / 2)
 
         dt_ms = (time.perf_counter() - start) * 1e3
         logger.debug(f"{self} read action: {dt_ms:.1f}ms")
