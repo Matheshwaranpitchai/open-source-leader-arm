@@ -14,7 +14,7 @@ def _default_home_angle() -> dict[int, float]:
 
 
 def _default_direction() -> dict[int, int]:
-    return {0: -1, 1: -1, 2: -1, 3: -1, 4: 1, 5: 1}
+    return {0: 1, 1: -1, 2: -1, 3: -1, 4: 1, 5: 1}
 
 
 def _default_scale() -> dict[int, float]:
