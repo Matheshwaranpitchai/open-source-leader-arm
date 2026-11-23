@@ -313,12 +313,14 @@ class MujocoSOArm(Robot):
         return self._task.success(self.data)
 
     # Arm joints in degrees from the middle of the joint range (LeRobot's SO follower zero), gripper 0-100.
+    # The model's pan axis turns opposite to a LeRobot-calibrated SO-101 follower, so pan is negated.
     def _norm_to_angle(self, idx: int, value: float) -> float:
         lo, hi = self.config.joint_range[idx]
         if JOINTS[idx] == "gripper":
             angle = lo + value / 100.0 * (hi - lo)
         else:
-            angle = (lo + hi) / 2 + math.radians(value)
+            sign = -1.0 if JOINTS[idx] == "shoulder_pan" else 1.0
+            angle = (lo + hi) / 2 + sign * math.radians(value)
         return min(max(angle, lo), hi)
 
     def _angle_to_norm(self, idx: int, angle: float) -> float:
@@ -326,7 +328,8 @@ class MujocoSOArm(Robot):
         angle = min(max(angle, lo), hi)
         if JOINTS[idx] == "gripper":
             return (angle - lo) / max(hi - lo, 1e-9) * 100.0
-        return math.degrees(angle - (lo + hi) / 2)
+        sign = -1.0 if JOINTS[idx] == "shoulder_pan" else 1.0
+        return sign * math.degrees(angle - (lo + hi) / 2)
 
 
     def _ensure_camera(self, spec) -> None:

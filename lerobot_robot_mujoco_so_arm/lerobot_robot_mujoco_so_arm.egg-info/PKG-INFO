@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: lerobot_robot_mujoco_so_arm
+Version: 0.2.0
+Summary: LeRobot Robot plugin: SO-ARM100 follower simulated in MuJoCo
+Requires-Python: >=3.10
+Requires-Dist: lerobot
+Requires-Dist: mujoco
+Requires-Dist: numpy
+Requires-Dist: pynput

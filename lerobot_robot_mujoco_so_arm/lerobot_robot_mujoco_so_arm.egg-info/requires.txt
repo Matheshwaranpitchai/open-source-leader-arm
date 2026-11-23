@@ -1,0 +1,4 @@
+lerobot
+mujoco
+numpy
+pynput
